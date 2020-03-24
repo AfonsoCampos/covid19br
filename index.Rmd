@@ -45,8 +45,7 @@ setwd("C:/Users/Afonso Campos/OneDrive - ufpr.br/Cursos/corona dashboard Afonso/
 url1 <- getURL("https://raw.githubusercontent.com/wcota/covid19br/master/cases-brazil-states.csv")
 
 dados <- read.csv(text = url1)
-library(rsconnect)
-deployApp()
+
 #Renomenando as colunas 
 colnames(dados)
 names(dados)[names(dados) == 'newCases'] <- 'numero'
@@ -138,6 +137,7 @@ dataacu<-aggregate(.~datas, data=dataacu, FUN=sum)
 dataacu$acumulado<-cumsum(dataacu$numero)
 pal <- colorNumeric(c("yellow", "red", "darkred"), 1:max(estados5$acumulado))
 
+#############dados mortes 
 #extraindo dados p caixas 
 url2 <- getURL("https://raw.githubusercontent.com/wcota/covid19br/master/cases-brazil-total.csv")
 
@@ -198,14 +198,14 @@ valueBox(value = sum(mortesestado$Mortes),icon = "fa-user-plus",caption = "Morte
 Row
 ----------------------------------
 
-### clicle nos estados e veja o número de casos 
+### Mapa do Brasil (Clique nas Regiões)
 
 ```{r}
 mapabra
 
 ```
 
-### clique nas regioes 
+### Numero de Casos Região e Estados(Clicável)
 ```{r}
 
 thm <- 
@@ -246,11 +246,10 @@ Graficos Dia e Região{data-icon="fa-user-plus"}
 Row{data-height=250}
 --------
 
-### ponte com o mouse nas baras ou clique na legenda das regiões
+### Número de Casos Confirmados Dia 
 ```{r}
 ggplot(estados2, aes(x=datas, y=numero, fill=regioes)) +
   geom_bar(stat="identity")+
-  ggtitle("Número de Casos Confirmados Por Dia") +
   xlab("Data") +
   ylab("Total")+
   labs(fill = "Regiao:")+
@@ -260,11 +259,10 @@ ggplotly()
 ```
 
 
-### passe o mouse na linha para observar os valores e dadas
+### Número de Casos Brasil Acumulado
 ```{r}
 ggplot(data=dataacu, aes(x=datas, y=acumulado, group=1)) +
   geom_line(color="red")+
-  ggtitle("Número de Casos Acumulado no Brasil")+
   geom_point(color="red")+
   theme_classic()
   ggplotly()
@@ -275,10 +273,9 @@ Row
 ----------
 
 
-### passe o mouse nas linhas    
-```{r}
+### Log Número de Casos Acumulado  Por Estado     
+```{r} 
 ggplot(estados2,aes(x=datas, y= log(acumulado), color = estado) )+
-  ggtitle("Logarítimo do Número de Casos Acumulado  Por Estado")+
   geom_line()+
   geom_point(aes(color= estado))+
   facet_wrap(estado~., ncol=9)+
@@ -296,70 +293,214 @@ ggplotly()
 ```
 
 
-Mortes por Estado{data-icon="fa-user-plus"}
+Casos e Mortes (Acumulado){data-icon="fa-user-plus"}
 ==================
 
 Row
-----------
+----------------------------------
 
-
-### passe o mouse ou clique em doentes e mortos   
+### São Paulo
 ```{r}
-mortesestado$Doentes<- mortesestado$`Total de Casos`- mortesestado$Mortes
-
-tabelamortes<-mortesestado[,-2] %>% gather(condicao,TOTAL, Doentes,Mortes, na.rm = FALSE, convert = FALSE)
-
-tabelamortes$estado <- as.character(tabelamortes$estado)
-tabelamortes$condicao<-as.character(tabelamortes$condicao)
-tabelamortes$TOTAL<-as.numeric(tabelamortes$TOTAL)
-
-
-ggplot(data = tabelamortes, aes(x = estado, y = TOTAL,fill= condicao)) + 
-  geom_bar(stat = "identity") +
-  coord_flip() +
-  scale_fill_manual(values=c("#E69F00", "#c40606"))+
-  labs(title = "Número de doentes e Mortes por Estado", 
-       y = "Contagem", x = "Estados", fill = "Legenda:")+
-  theme_classic()
-  
-ggplotly()%>%
-  layout(legend = list(orientation = "h", x = 0.38, y =-0.2))
-
+vSP<-mortesestado[mortesestado$estado == "SP",]  
+gauge(vSP$Mortes,  min = 0, max = vSP$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
 ```
 
+### Rio de Janeiro
+```{r}
+vRJ <- mortesestado[mortesestado$estado == "RJ",]  
+gauge(vRJ$Mortes,  min = 0, max = vRJ$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+Row
+----------------------------------
+
+### Acre
+```{r}
+vAC<-mortesestado[mortesestado$estado == "AC",]  
+gauge(vAC$Mortes,  min = 0, max = vAC$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+
+### Alagoas
+```{r}
+vAL<-mortesestado[mortesestado$estado == "AL",]
+gauge(vAL$Mortes,  min = 0, max = vAL$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Amapá
+```{r}
+vAP<-mortesestado[mortesestado$estado == "AP",]  
+gauge(vAP$Mortes,  min = 0, max = vAP$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Amazonas
+```{r}
+vAM<-mortesestado[mortesestado$estado == "AM",]  
+gauge(vAM$Mortes,  min = 0, max = vAM$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Bahia
+```{r}
+vBA<-mortesestado[mortesestado$estado == "BA",]  
+gauge(vBA$Mortes,  min = 0, max = vBA$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+Row
+----------------------------------
+
+### Ceará
+```{r}
+vCE<-mortesestado[mortesestado$estado == "CE",]  
+gauge(vCE$Mortes,  min = 0, max = vCE$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Distrito Federal
+```{r}
+vDF<-mortesestado[mortesestado$estado == "DF",]  
+gauge(vDF$Mortes,  min = 0, max = vDF$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Espírito Santo
+```{r}
+vES<-mortesestado[mortesestado$estado == "ES",]  
+gauge(vES$Mortes,  min = 0, max = vES$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Goiás
+```{r}
+vGO<-mortesestado[mortesestado$estado == "GO",] 
+gauge(vGO$Mortes,  min = 0, max = vGO$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Maranhão
+```{r}
+vMA<-mortesestado[mortesestado$estado == "MA",]  
+gauge(vMA$Mortes,  min = 0, max = vMA$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+Row
+----------------------------------
+
+### Mato Grosso
+```{r}
+vMT<-mortesestado[mortesestado$estado == "MT",]  
+gauge(vMT$Mortes,  min = 0, max = vMT$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+
+### Mato Grosso do Sul
+```{r}
+vMS <- mortesestado[mortesestado$estado == "MS",]  
+gauge(vMS$Mortes,  min = 0, max = vMS$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Minas Gerais
+```{r}
+vMG<-mortesestado[mortesestado$estado == "MG",]  
+gauge(vMG$Mortes,  min = 0, max = vMG$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Pará
+```{r}
+vPA<-mortesestado[mortesestado$estado == "PA",]  
+gauge(vPA$Mortes,  min = 0, max = vPA$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Paraíba
+```{r}
+vPB<-mortesestado[mortesestado$estado == "PB",]  
+gauge(vPB$Mortes,  min = 0, max = vPB$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+Row
+----------------------------------
+
+### Paraná
+```{r}
+vPR<-mortesestado[mortesestado$estado == "PR",]  
+gauge(vPR$Mortes,  min = 0, max = vPR$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Pernambuco
+```{r}
+vPE<-mortesestado[mortesestado$estado == "PE",]  
+gauge(vPE$Mortes,  min = 0, max = vPE$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Piauí
+```{r}
+vPI<-mortesestado[mortesestado$estado == "PI",]  
+gauge(vPI$Mortes,  min = 0, max = vPI$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+
+### Rio Grande do Norte
+```{r}
+vRN<-mortesestado[mortesestado$estado == "RN",]  
+gauge(vRN$Mortes,  min = 0, max = vRN$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Rio Grande do Sul
+```{r}
+vRS<-mortesestado[mortesestado$estado == "RS",]  
+gauge(vRS$Mortes,  min = 0, max = vRS$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+Row
+----------------------------------
+
+### Rondônia
+```{r}
+vRO<-mortesestado[mortesestado$estado == "RO",]  
+gauge(vRO$Mortes,  min = 0, max = vRO$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Roraima
+```{r}
+vRR<-mortesestado[mortesestado$estado == "RR",]  
+gauge(vRR$Mortes,  min = 0, max = vRR$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Santa Catarina
+```{r}
+vSC<-mortesestado[mortesestado$estado == "SC",]  
+gauge(vSC$Mortes,  min = 0, max = vSC$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Sergipe
+```{r}
+vSE<-mortesestado[mortesestado$estado == "SE",]  
+gauge(vSE$Mortes,  min = 0, max = vSE$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
+
+### Tocantins
+```{r}
+vTO<-mortesestado[mortesestado$estado == "TO",]  
+gauge(vTO$Mortes,  min = 0, max = vTO$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+```
 
 Informações {data-icon="fa-address-card"}
 ==================
 
 
-**The Coronavirus Dashboard**
+**Gráficos Coronavírus (COVID-19) BRASIL**
 
-This Coronavirus dashboard provides an overview of the 2019 Novel Coronavirus COVID-19 (2019-nCoV) epidemic. This dashboard is built with R using the Rmakrdown framework and can easily reproduce by others. The code behind the dashboard available [here](https://github.com/RamiKrispin/coronavirus_dashboard)
+Este site foi elaborado com intuito de fornecer gráficos sobre a evolução da pandemia do coronavírus no Brasil. As Atualizações irão ocorrer conforme os dados forem disponibilizados, sendo site atualizado de uma a duas vezes por dia.  Novas gráficos poderão ser implementados. 
 
-**Data**
+**Dados** 
 
-The input data for this dashboard is the [coronavirus](https://github.com/RamiKrispin/coronavirus) R package (dev version). The data and dashboard is refreshed on a daily bases. The raw data pulled from the Johns Hopkins University Center for Systems Science and Engineering (JHU CCSE) Coronavirus [repository](https://github.com/RamiKrispin/coronavirus-csv)
+- Os dados para elaboração dos dados foram obtidos a partir do github do [Wesley Costa](https://github.com/wcota)
 
+**Recomendações de Sites**
 
+- Acredito que as melhores de informações sobre o andamento da pandemia em português estão no canal do [Atila Lamarindo]( https://www.youtube.com/channel/UCSTlOTcyUmzvhQi6F8lFi5w) no youtube. 
 
+**Contato ** 
 
-**Packages**
+Críticas, sugestões e contribuições podem ser enviadas por [e-mail](mailto:afonso@agronomo.eng.br), ou inbox no meu [twitter](https://twitter.com/GenAgronomica).
 
-* Dashboard interface - the [flexdashboard](https://rmarkdown.rstudio.com/flexdashboard/) package. 
-* Visualization - the [plotly](https://plot.ly/r/) package for the plots and [leaflet](https://rstudio.github.io/leaflet/) for the map
-* Data manipulation - [dplyr](https://dplyr.tidyverse.org/), and [tidyr](https://tidyr.tidyverse.org/)
-* Tables - the [DT](https://rstudio.github.io/DT/) package
+At.te, 
 
-**Deployment and reproducibly**
+Eng. Agro. Amaro Afonso Campos de Azeredo
 
-The dashboard was deployed to Github docs. If you wish to deploy and/or modify the dashboard on your Github account, you can apply the following steps:
-
-* Fork the dashboard [repository](https://github.com/RamiKrispin/coronavirus_dashboard), or
-* Clone it and push it to your Github package
-* Here some general guidance about deployment of flexdashboard on Github page - [link](https://github.com/pbatey/flexdashboard-example)
-
-For any question or feedback, you can either open an [issue](https://github.com/RamiKrispin/coronavirus_dashboard/issues) or contact me on [Twitter](https://twitter.com/Rami_Krispin).
-
-**Contribution** 
-
-The **Map** tab was contributed by [Art Steinmetz](@adababbage) on this [pull request](https://github.com/RamiKrispin/coronavirus_dashboard/pull/1). Thanks Art!
+Doutor em genética e melhoramento

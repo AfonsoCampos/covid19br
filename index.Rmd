@@ -328,11 +328,8 @@ ggplotly()%>%
 ```
 
 
-Sobre {data-icon="fa-user-plus"}
+Informaçoes {data-icon="fa-address-card"}
 ==================
-
-Row
-----------
 
 
 **The Coronavirus Dashboard**

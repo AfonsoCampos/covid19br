@@ -485,15 +485,15 @@ Informações {data-icon="fa-address-card"}
 
 **Gráficos Coronavírus (COVID-19) BRASIL**
 
-Este site foi elaborado com intuito de fornecer gráficos sobre a evolução da pandemia do coronavírus no Brasil. As Atualizações irão ocorrer conforme os dados forem disponibilizados, sendo site atualizado de uma a duas vezes por dia.  Novas gráficos poderão ser implementados. 
+Este site foi elaborado com intuito de fornecer gráficos sobre a evolução da pandemia do coronavírus no Brasil. As atualizações irão ocorrer conforme os dados forem disponibilizados, sendo site atualizado de uma a duas vezes por dia.  Novos gráficos poderão ser implementados. 
 
 **Dados** 
 
-- Os dados para elaboração dos dados foram obtidos a partir do github do [Wesley Costa](https://github.com/wcota)
+- Os dados para elaboração dos gráficos foram obtidos a partir do github do [Wesley Costa](https://github.com/wcota)
 
 **Recomendações de Sites**
 
-- Acredito que as melhores de informações sobre o andamento da pandemia em português estão no canal do [Atila Lamarindo]( https://www.youtube.com/channel/UCSTlOTcyUmzvhQi6F8lFi5w) no youtube. 
+- Acredito que as melhores informações sobre o andamento da pandemia em português estão no canal do [Atila Lamarindo]( https://www.youtube.com/channel/UCSTlOTcyUmzvhQi6F8lFi5w) no youtube. 
 
 **Contato ** 
 

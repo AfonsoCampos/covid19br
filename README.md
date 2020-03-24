@@ -3,7 +3,7 @@
 
 ### Coronavirus Gráficos
 
-Graficos sobre [Os casos de coronavírus no Brasil](https://afonsocampos.github.io/covid19br/)
+Graficos sobre [os casos de coronavírus no Brasil](https://afonsocampos.github.io/covid19br/)
 
 
 

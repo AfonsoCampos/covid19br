@@ -5,6 +5,6 @@ account: afonsocampos
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1986803
-bundleId: 2918646
+bundleId: 2918812
 url: https://afonsocampos.shinyapps.io/covid19br/
-when: 1585064905.70227
+when: 1585066992.56394

@@ -1,5 +1,5 @@
 ---
-title: "Coronavirus"
+title: "Coronavirus Brasil"
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows

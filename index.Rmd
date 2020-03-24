@@ -328,7 +328,7 @@ ggplotly()%>%
 ```
 
 
-Informaçoes {data-icon="fa-address-card"}
+Informações {data-icon="fa-address-card"}
 ==================
 
 

@@ -171,7 +171,7 @@ Row {data-width=150}
 ### dias 
 ```{r}
 
-valueBox(value = numerodias,icon = "fa-calendar",caption = "Dias da Epidemia no Brasil*",color = "green")
+valueBox(value = numerodias,icon = "fa-calendar",caption = "Dias da Epidemia no Brasil",color = "green")
 ```
 
 ### Data ultima atuliazação
@@ -205,7 +205,7 @@ mapabra
 
 ```
 
-### Numero de Casos Região e Estados (Clicável)
+### Número de Casos Região e Estados (Clicável)
 ```{r}
 
 thm <- 
@@ -250,7 +250,7 @@ Row{data-height=300}
 ```{r}
 ggplot(estados2, aes(x=datas, y=numero, fill=regioes)) +
   geom_bar(stat="identity")+
-  xlab("Data") +
+  xlab("Datas") +
   ylab("Total")+
   labs(fill = "Regiao:")+
   theme_classic()+
@@ -259,10 +259,12 @@ ggplotly()
 ```
 
 
-### Número de Casos Brasil Acumulado
+### Número de Casos no Brasil Acumulado
 ```{r}
 ggplot(data=dataacu, aes(x=datas, y=acumulado, group=1)) +
   geom_line(color="red")+
+  xlab("Datas") +
+  ylab("Acumulado")+
   geom_point(color="red")+
   theme_classic()
   ggplotly()
@@ -271,11 +273,13 @@ ggplot(data=dataacu, aes(x=datas, y=acumulado, group=1)) +
 Row{.tabset .tabset-fade}
 ----------------------------------------------------
 
-### Casos Região: NORTE
+### Casos Região: Norte
 ```{r}
 
 ggplot(estados2[estados2$regioes == "NORTE",]) + 
   geom_line(aes(datas, acumulado, color = estado))+
+  xlab("Datas") +
+  ylab("Acumulado")+
   theme_classic()
 
 ggplotly(dynamicTicks = TRUE)%>%
@@ -290,10 +294,12 @@ ggplotly(dynamicTicks = TRUE)%>%
 ```
 
 
-### Casos Região: NORDESTE
+### Casos Região: Nordeste
 ```{r}
 ggplot(estados2[estados2$regioes == "NORDESTE",]) + 
   geom_line(aes(datas, acumulado, color = estado))+
+  xlab("Datas") +
+  ylab("Acumulado")+
   theme_classic()
 
 ggplotly(dynamicTicks = TRUE)%>%
@@ -310,6 +316,8 @@ ggplotly(dynamicTicks = TRUE)%>%
 ```{r}
 ggplot(estados2[estados2$regioes == "CENTRO-OESTE",]) + 
   geom_line(aes(datas, acumulado, color = estado))+
+  xlab("Datas") +
+  ylab("Acumulado")+
   theme_classic()
 
 ggplotly(dynamicTicks = TRUE)%>%
@@ -326,6 +334,8 @@ ggplotly(dynamicTicks = TRUE)%>%
 ```{r}
 ggplot(estados2[estados2$regioes == "SUDESTE",]) + 
   geom_line(aes(datas, acumulado, color = estado))+
+  xlab("Datas") +
+  ylab("Acumulado")+
   theme_classic()
 
 ggplotly(dynamicTicks = TRUE)%>%
@@ -343,6 +353,8 @@ ggplotly(dynamicTicks = TRUE)%>%
 ```{r}
 ggplot(estados2[estados2$regioes == "SUL",]) + 
   geom_line(aes(datas, acumulado, color = estado))+
+  xlab("Datas") +
+  ylab("Acumulado")+
   theme_classic()
 
 ggplotly(dynamicTicks = TRUE)%>%
@@ -559,7 +571,7 @@ Informações {data-icon="fa-address-card"}
 
 **Dados e deploy** 
 
-- Os dados para elaboração dos gráficos foram obtidos a partir do github do [Wesley Costa](https://github.com/wcota)
+- Os dados para elaboração dos gráficos foram obtidos a partir do github do [Wesley Costa](https://github.com/wcota).
 
 - Estava com o site pronto mas sem conseguir hospedar, graças ao exemplo no git do [Ramir Krispin](https://github.com/RamiKrispin) entendi como resolver o problema. 
 

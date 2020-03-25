@@ -164,7 +164,7 @@ numerodias<- as.numeric(difftime(max(hoje),min(inicioepi), units = c("days")))
 ```
 
 
-Mapa Brasil {data-icon="fa-globe"}
+Home {data-icon="fa-globe"}
 =============================
 Row {data-width=150}
 --------------------------------------
@@ -241,7 +241,7 @@ highchart() %>%
 
 ```
 
-Graficos Dia e Região{data-icon="fa-user-plus"}
+Casos: Estados e Regioes {data-icon="fa-user-plus"}
 ==================
 Row{data-height=300}
 --------
@@ -548,15 +548,22 @@ Informações {data-icon="fa-address-card"}
 
 **Gráficos Coronavírus (COVID-19) BRASIL**
 
-Este site foi elaborado com intuito de fornecer gráficos sobre a evolução da pandemia do coronavírus no Brasil. As atualizações irão ocorrer conforme os dados forem disponibilizados, sendo site atualizado de uma a duas vezes por dia.  Novos gráficos poderão ser implementados. 
+- Este site foi elaborado com intuito de fornecer gráficos sobre a evolução da pandemia do coronavírus no Brasil. As atualizações irão ocorrer conforme os dados forem disponibilizados, sendo site atualizado de uma a duas vezes por dia.  Novos gráficos poderão ser implementados. 
 
-**Dados** 
-
-- Os dados para elaboração dos gráficos foram obtidos a partir do github do [Wesley Costa](https://github.com/wcota)
+- Quase todos os gráficos disponibilizados são interativos e melhor observados em dispositivos como tabletes e computadores. Em celulares, recomenda-se a utilização em modo paisagem. 
 
 **Recomendações de Sites**
 
 - Acredito que as melhores informações sobre o andamento da pandemia em português estão no canal do [Atila Lamarindo]( https://www.youtube.com/channel/UCSTlOTcyUmzvhQi6F8lFi5w) no youtube. 
+
+
+**Dados e deploy** 
+
+- Os dados para elaboração dos gráficos foram obtidos a partir do github do [Wesley Costa](https://github.com/wcota)
+
+- Estava com o site pronto mas sem conseguir hospedar, graças ao exemplo no git do [Ramir Krispin](https://github.com/RamiKrispin) entendi como resolver o problema. 
+
+
 
 **Contato ** 
 

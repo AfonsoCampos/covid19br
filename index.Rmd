@@ -205,7 +205,7 @@ mapabra
 
 ```
 
-### Numero de Casos Região e Estados(Clicável)
+### Numero de Casos Região e Estados (Clicável)
 ```{r}
 
 thm <- 
@@ -243,7 +243,7 @@ highchart() %>%
 
 Graficos Dia e Região{data-icon="fa-user-plus"}
 ==================
-Row{data-height=250}
+Row{data-height=300}
 --------
 
 ### Número de Casos Confirmados Dia 
@@ -268,28 +268,91 @@ ggplot(data=dataacu, aes(x=datas, y=acumulado, group=1)) +
   ggplotly()
 ```
 
+Row{.tabset .tabset-fade}
+----------------------------------------------------
 
-Row
-----------
+### Casos Região: NORTE
+```{r}
+
+ggplot(estados2[estados2$regioes == "NORTE",]) + 
+  geom_line(aes(datas, acumulado, color = estado))+
+  theme_classic()
+
+ggplotly(dynamicTicks = TRUE)%>%
+  layout(hovermode = "x") %>%
+  layout(margin = list(l = 50, r = 50, t = 60, b = 100),
+         annotations = list(text = '*Clique no nome do estado na legenda para remover e ajustar a escala',
+                            font = list(size = 12),
+                            showarrow = FALSE,
+                            xref = 'paper', x = 0,
+                            yref = 'paper', y = -0.3))
+
+```
 
 
-### Log Número de Casos Acumulado  Por Estado     
-```{r} 
-ggplot(estados2,aes(x=datas, y= log(acumulado), color = estado) )+
-  geom_line()+
-  geom_point(aes(color= estado))+
-  facet_wrap(estado~., ncol=9)+
-  theme_pubclean()+
-  theme(axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(),
-        axis.title.y=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        legend.position = "none")
+### Casos Região: NORDESTE
+```{r}
+ggplot(estados2[estados2$regioes == "NORDESTE",]) + 
+  geom_line(aes(datas, acumulado, color = estado))+
+  theme_classic()
 
-ggplotly()
+ggplotly(dynamicTicks = TRUE)%>%
+  layout(hovermode = "x") %>%
+  layout(margin = list(l = 50, r = 50, t = 60, b = 100),
+         annotations = list(text = '*Clique no nome do estado na legenda para remover e ajustar a escala',
+                            font = list(size = 12),
+                            showarrow = FALSE,
+                            xref = 'paper', x = 0,
+                            yref = 'paper', y = -0.3))
+```
 
+### Casos Região: Centro-Oeste
+```{r}
+ggplot(estados2[estados2$regioes == "CENTRO-OESTE",]) + 
+  geom_line(aes(datas, acumulado, color = estado))+
+  theme_classic()
+
+ggplotly(dynamicTicks = TRUE)%>%
+  layout(hovermode = "x") %>%
+  layout(margin = list(l = 50, r = 50, t = 60, b = 100),
+         annotations = list(text = '*Clique no nome do estado na legenda para remover e ajustar a escala',
+                            font = list(size = 12),
+                            showarrow = FALSE,
+                            xref = 'paper', x = 0,
+                            yref = 'paper', y = -0.3))
+```
+
+### Casos Região: Sudeste
+```{r}
+ggplot(estados2[estados2$regioes == "SUDESTE",]) + 
+  geom_line(aes(datas, acumulado, color = estado))+
+  theme_classic()
+
+ggplotly(dynamicTicks = TRUE)%>%
+  layout(hovermode = "x") %>%
+  layout(margin = list(l = 50, r = 50, t = 60, b = 100),
+         annotations = list(text = '*Clique no nome do estado na legenda para remover e ajustar a escala',
+                            font = list(size = 12),
+                            showarrow = FALSE,
+                            xref = 'paper', x = 0,
+                            yref = 'paper', y = -0.3))
+
+```
+
+### Casos Região: Sul
+```{r}
+ggplot(estados2[estados2$regioes == "SUL",]) + 
+  geom_line(aes(datas, acumulado, color = estado))+
+  theme_classic()
+
+ggplotly(dynamicTicks = TRUE)%>%
+  layout(hovermode = "x") %>%
+  layout(margin = list(l = 50, r = 50, t = 60, b = 100),
+         annotations = list(text = '*Clique no nome do estado na legenda para remover e ajustar a escala',
+                            font = list(size = 12),
+                            showarrow = FALSE,
+                            xref = 'paper', x = 0,
+                            yref = 'paper', y = -0.3))
 ```
 
 

@@ -560,9 +560,11 @@ Informações {data-icon="fa-address-card"}
 
 **Gráficos Coronavírus (COVID-19) BRASIL**
 
-- Este site foi elaborado com intuito de fornecer gráficos sobre a evolução da pandemia do coronavírus no Brasil. As atualizações irão ocorrer conforme os dados forem disponibilizados, sendo site atualizado de uma a duas vezes por dia.  Novos gráficos poderão ser implementados. 
+- Este site foi elaborado com intuito de fornecer gráficos sobre a evolução da pandemia do coronavírus no Brasil. As atualizações irão ocorrer conforme os dados forem disponibilizados, sendo o site atualizado de uma a duas vezes por dia. 
 
 - Quase todos os gráficos disponibilizados são interativos e melhor observados em dispositivos como tabletes e computadores. Em celulares, recomenda-se a utilização em modo paisagem. 
+
+- Novos gráficos poderão ser implementados. 
 
 **Recomendações de Sites**
 

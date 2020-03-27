@@ -179,7 +179,7 @@ valueBox(value = numerodias,icon = "fa-calendar",caption = "Dias da Epidemia no 
 
 #atualizacao<-format(max(estados2$datas), "%d/%m/%Y")
 
-datahora<- format(Sys.time(), '%d/%m/%Y as %Hh%m')
+datahora<- format(Sys.time(), '%d/%m/%Y - %Hh%m')
 
 
 valueBox(value = datahora ,icon = "fa-calendar",caption = "Atualização dos Dados",color = "green")

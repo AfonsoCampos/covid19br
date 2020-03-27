@@ -177,9 +177,12 @@ valueBox(value = numerodias,icon = "fa-calendar",caption = "Dias da Epidemia no 
 ### Data ultima atuliazação
 ```{r}
 
-atualizacao<-format(max(estados2$datas), "%d/%m/%Y")
+#atualizacao<-format(max(estados2$datas), "%d/%m/%Y")
 
-valueBox(value =atualizacao ,icon = "fa-calendar",caption = "Data de Atualização dos Dados",color = "green")
+datahora<- format(Sys.time(), '%d/%m/%Y as %Hh%m')
+
+
+valueBox(value = datahora ,icon = "fa-calendar",caption = "Atualização dos Dados",color = "green")
 ```
 
 ### Confirmados 

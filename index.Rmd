@@ -196,7 +196,10 @@ valueBox(value = max(dataacu$acumulado),icon = "fa-ambulance",caption = "Número
 valueBox(value = sum(mortesestado$Mortes),icon = "fa-user-plus",caption = "Mortes",color = "red")
 ```
 
-
+### Letalidade 
+```{r}
+valueBox(value = paste(round(sum(mortesestado$Mortes)/max(dataacu$acumulado)*100,1), "%", sep = ""), icon = "fa-user-plus",caption = "Letalidade",color = "red")
+```
 
 Row
 ----------------------------------

@@ -52,7 +52,7 @@ dados<-dados[, c(-2,-4, -7)]
 
 
 ##Removendo as linhas de total  
-removelinha<-which(dados$estado=="TOTAL")
+removelinha <- which(dados$estado=="TOTAL")
 dados<-dados[-removelinha,]
 estados2<-dados
 
@@ -154,9 +154,9 @@ mortesestado<-mortesestado[-removelinha2,]
 
 
 #caixa numero de dias epidemia 
-hoje<-as.Date(Sys.Date())
-inicioepi<- as.Date("2020-02-25")
-numerodias<- as.numeric(difftime(max(hoje),min(inicioepi), units = c("days")))
+hoje <-as.Date(Sys.Date())
+inicioepi <- as.Date("2020-02-25")
+numerodias <- as.numeric(difftime(max(hoje),min(inicioepi), units = c("days")))
 
 ```
 

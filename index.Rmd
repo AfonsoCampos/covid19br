@@ -176,7 +176,7 @@ valueBox(value = numerodias,icon = "fa-calendar",caption = "Dias da Epidemia no 
 
 #atualizacao<-format(max(estados2$datas), "%d/%m/%Y")
 
-datahora<- format(Sys.time(), '%d/%m/%Y - %Hh%m')
+datahora<- format(Sys.time(), '%d/%m/%Y - %Hh%M')
 
 
 valueBox(value = datahora ,icon = "fa-calendar",caption = "Atualização dos Dados",color = "green")
@@ -190,7 +190,7 @@ valueBox(value = max(dataacu$acumulado),icon = "fa-ambulance",caption = "Número
 
 ### Mortes
 ```{r}
-valueBox(value = sum(mortesestado$Mortes),icon = "fa-user-plus",caption = "Mortes",color = "red")
+valueBox(value = sum(mortesestado$Mortes),icon = "fa-user-plus",caption = "Óbitos",color = "red")
 ```
 
 ### Letalidade 

@@ -48,8 +48,7 @@ names(dados)[names(dados) == 'newCases'] <- 'numero'
 names(dados)[names(dados) == 'state'] <- 'estado'
 names(dados)[names(dados) == 'date'] <- 'datas'
 names(dados)[names(dados) == 'deaths'] <- 'mortes'
-dados<-dados[, c(-2,-4, -7)]
-
+dados<-dados[, c(1,3, 6,7)] #sel colunas renomeadas
 
 ##Removendo as linhas de total  
 removelinha <- which(dados$estado=="TOTAL")

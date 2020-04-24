@@ -1,5 +1,5 @@
 ---
-title: "Coronavírus (COVID-19) -  Brasil "
+title: "Coronavírus Brasil - V1.1 "
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
@@ -257,16 +257,17 @@ Casos: Estados e Regioes {data-icon="fa-user-plus"}
 Row{data-height=300}
 --------
 
-### Número de Casos Confirmados Dia 
+### Casos Confirmados Dia nas Regiões
 ```{r}
-ggplot(estados2, aes(x=datas, y=numero, fill=regioes)) +
+plotcadia <- ggplot(estados2, aes(x=datas, y=numero, fill=regioes)) +
   geom_bar(stat="identity")+
-  xlab("Datas") +
+  xlab("Número de Casos Por Dia") +
   ylab("Total")+
   labs(fill = "Regiao:")+
-  theme_classic()+
- theme(legend.position = "bottom")
-ggplotly()
+  theme_classic()
+ggplotly(plotcadia) %>%
+layout(legend = list(orientation = "t", x = 0.001, y =1))
+
 ```
 
 
@@ -379,191 +380,59 @@ ggplotly(dynamicTicks = TRUE)%>%
 ```
 
 
-Casos e Mortes (Acumulado){data-icon="fa-user-plus"}
+Óbitos e Letalidade {data-icon="fa-user-plus"}
 ==================
 
 Row
 ----------------------------------
 
-### São Paulo
+### Total de Óbitos por Estado
 ```{r}
-vSP<-mortesestado[mortesestado$estado == "SP",]  
-gauge(vSP$Mortes,  min = 0, max = vSP$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
+#obitos por estados 
+#ultima data disponível
+estadosobitos <- dados[dados$datas == max(as.character(dados$datas)),]
+
+names(estadosobitos)[names(estadosobitos) == "mortes"] <- "óbitos"  
+
+estadosobitos <- estadosobitos[estadosobitos$óbitos > 0,] #removendo o que for n tiver morte 
+
+ggplot(estadosobitos, aes(x = reorder(estado, óbitos), y=óbitos))+
+  ylab("Total de óbitos")+
+  xlab("Estados")+
+  ylim(NA, max(estadosobitos$óbitos)+100)+
+  geom_text(aes(label=óbitos), hjust=-0.1, size=3.5)+
+  geom_bar(stat = "identity", fill = "#db1414")+
+  coord_flip()+
+  theme_classic()
 ```
 
-### Rio de Janeiro
+### Letalidade por Estado
 ```{r}
-vRJ <- mortesestado[mortesestado$estado == "RJ",]  
-gauge(vRJ$Mortes,  min = 0, max = vRJ$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
+#acumulado até a ultima data 
+estadosacumulado <- estados2[estados2$datas ==max(as.character(estados2$datas)),]
+ 
 
-Row
-----------------------------------
+estadosacumulado$letalidade<-round(estadosacumulado$mortes/estadosacumulado$acumulado*100,2)
 
-### Acre
-```{r}
-vAC<-mortesestado[mortesestado$estado == "AC",]  
-gauge(vAC$Mortes,  min = 0, max = vAC$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
+#Média nacional 
+med_bra<-round(sum(estadosacumulado$mortes)/sum(estadosacumulado$acumulado)*100, 2) #aqui conta estados sem óbito
 
+estadosacumulado <- estadosacumulado[estadosacumulado$letalidade > 0,] #removenvo os 0
 
-### Alagoas
-```{r}
-vAL<-mortesestado[mortesestado$estado == "AL",]
-gauge(vAL$Mortes,  min = 0, max = vAL$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
+ggplot(estadosacumulado, aes(x = reorder(estado, letalidade), y=letalidade))+
+  ylab("Letalidade (%)") +
+  xlab("Estados")+
+  ylim(NA, max(estadosacumulado$letalidade)+1)+
+  geom_text(aes(label=letalidade), hjust=-0.1, size=3.5)+
+  geom_bar(stat = "identity", fill = "#db1414")+
+  coord_flip()+
+   geom_hline(yintercept = med_bra, size =1.2,linetype= "dashed", color ="#f0674f")+
+   geom_text(aes(y=med_bra, label=paste0("Média Nacional ",med_bra,"%"), x= "RS"))+
+  theme_classic()
 
-### Amapá
-```{r}
-vAP<-mortesestado[mortesestado$estado == "AP",]  
-gauge(vAP$Mortes,  min = 0, max = vAP$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-### Amazonas
-```{r}
-vAM<-mortesestado[mortesestado$estado == "AM",]  
-gauge(vAM$Mortes,  min = 0, max = vAM$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-### Bahia
-```{r}
-vBA<-mortesestado[mortesestado$estado == "BA",]  
-gauge(vBA$Mortes,  min = 0, max = vBA$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-Row
-----------------------------------
-
-### Ceará
-```{r}
-vCE<-mortesestado[mortesestado$estado == "CE",]  
-gauge(vCE$Mortes,  min = 0, max = vCE$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-### Distrito Federal
-```{r}
-vDF<-mortesestado[mortesestado$estado == "DF",]  
-gauge(vDF$Mortes,  min = 0, max = vDF$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-### Espírito Santo
-```{r}
-vES<-mortesestado[mortesestado$estado == "ES",]  
-gauge(vES$Mortes,  min = 0, max = vES$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-### Goiás
-```{r}
-vGO<-mortesestado[mortesestado$estado == "GO",] 
-gauge(vGO$Mortes,  min = 0, max = vGO$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-### Maranhão
-```{r}
-vMA<-mortesestado[mortesestado$estado == "MA",]  
-gauge(vMA$Mortes,  min = 0, max = vMA$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-Row
-----------------------------------
-
-### Mato Grosso
-```{r}
-vMT<-mortesestado[mortesestado$estado == "MT",]  
-gauge(vMT$Mortes,  min = 0, max = vMT$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
 ```
 
 
-### Mato Grosso do Sul
-```{r}
-vMS <- mortesestado[mortesestado$estado == "MS",]  
-gauge(vMS$Mortes,  min = 0, max = vMS$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-### Minas Gerais
-```{r}
-vMG<-mortesestado[mortesestado$estado == "MG",]  
-gauge(vMG$Mortes,  min = 0, max = vMG$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-### Pará
-```{r}
-vPA<-mortesestado[mortesestado$estado == "PA",]  
-gauge(vPA$Mortes,  min = 0, max = vPA$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-### Paraíba
-```{r}
-vPB<-mortesestado[mortesestado$estado == "PB",]  
-gauge(vPB$Mortes,  min = 0, max = vPB$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-Row
-----------------------------------
-
-### Paraná
-```{r}
-vPR<-mortesestado[mortesestado$estado == "PR",]  
-gauge(vPR$Mortes,  min = 0, max = vPR$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-### Pernambuco
-```{r}
-vPE<-mortesestado[mortesestado$estado == "PE",]  
-gauge(vPE$Mortes,  min = 0, max = vPE$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-### Piauí
-```{r}
-vPI<-mortesestado[mortesestado$estado == "PI",]  
-gauge(vPI$Mortes,  min = 0, max = vPI$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-
-### Rio Grande do Norte
-```{r}
-vRN<-mortesestado[mortesestado$estado == "RN",]  
-gauge(vRN$Mortes,  min = 0, max = vRN$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-### Rio Grande do Sul
-```{r}
-vRS<-mortesestado[mortesestado$estado == "RS",]  
-gauge(vRS$Mortes,  min = 0, max = vRS$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-Row
-----------------------------------
-
-### Rondônia
-```{r}
-vRO<-mortesestado[mortesestado$estado == "RO",]  
-gauge(vRO$Mortes,  min = 0, max = vRO$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-### Roraima
-```{r}
-vRR<-mortesestado[mortesestado$estado == "RR",]  
-gauge(vRR$Mortes,  min = 0, max = vRR$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-### Santa Catarina
-```{r}
-vSC<-mortesestado[mortesestado$estado == "SC",]  
-gauge(vSC$Mortes,  min = 0, max = vSC$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-### Sergipe
-```{r}
-vSE<-mortesestado[mortesestado$estado == "SE",]  
-gauge(vSE$Mortes,  min = 0, max = vSE$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
-
-### Tocantins
-```{r}
-vTO<-mortesestado[mortesestado$estado == "TO",]  
-gauge(vTO$Mortes,  min = 0, max = vTO$`Total de Casos`,sectors = gaugeSectors(colors = c("red")))
-```
 
 Informações {data-icon="fa-address-card"}
 ==================

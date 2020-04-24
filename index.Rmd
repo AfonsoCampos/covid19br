@@ -108,23 +108,6 @@ proj4string(estadoshape) <- CRS("+proj=longlat +datum=WGS84 +no_defs") #adiciona
 Encoding(estadoshape$NM_ESTADO) <- "UTF-8"
 
 
-#######grafico mapa brasil 
-pal <- colorNumeric(c("yellow", "red", "darkred"), 1:max(estados5$acumulado)) #cores do mapa
-
-state_popup <- paste0("<strong>Estado: </strong>", 
-                      estadoshape$NM_ESTADO, 
-                      "<br><strong>Número de Casos: </strong>", estadoshape$acumulado)
-
-mapabra<-leaflet(data = estadoshape) %>%
-  addProviderTiles("CartoDB.Positron") %>%
-  addPolygons(fillColor = ~pal(estadoshape$acumulado), 
-              fillOpacity = 0.8, 
-              color = "#BDBDC3", 
-              weight = 1, 
-              popup = state_popup) %>%
-  addLegend("bottomright", pal = pal, values = ~estadoshape$acumulado,
-            title = "Número de casos",
-            opacity = 1)
 
 
 #obetendo os dados acumulados por data
@@ -203,6 +186,32 @@ Row
 ### Mapa do Brasil (Clique nas Regiões)
 
 ```{r}
+
+#######grafico mapa brasil 
+#cores do mapa
+#pal <- colorNumeric(c("yellow", "red", "darkred"), 1:max(estados5$acumulado))
+pal <- colorQuantile("OrRd", domain = estados5$acumulado, n =5)
+qpal_labs <- quantile(estados5$acumulado, seq(0, 1, .2)) # depends on n from pal
+qpal_labs <- paste(lag(qpal_labs), qpal_labs, sep = " - ")[-1]# first lag is NA
+qpal_colors <- unique(pal(sort(estados5$acumulado))) # hex codes
+
+state_popup <- paste0("<strong>Estado: </strong>", 
+                      estadoshape$NM_ESTADO, 
+                      "<br><strong>Número de Casos: </strong>", estadoshape$acumulado)
+
+# addLegend("bottomright", pal = qpal_labs, values = ~estadoshape$acumulado,
+#             title = "Número de casos",
+#             opacity = 1)
+mapabra<-leaflet(data = estadoshape) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  addPolygons(fillColor = ~pal(estadoshape$acumulado), 
+              fillOpacity = 0.8, 
+              color = "#BDBDC3", 
+              weight = 1, 
+              popup = state_popup)%>%
+  addLegend("bottomright", colors = qpal_colors, labels = qpal_labs,
+            title = "Número de casos",
+            opacity = 1)
 mapabra
 
 ```

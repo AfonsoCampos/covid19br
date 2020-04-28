@@ -30,7 +30,6 @@ library(rvest)
 library(ggpubr)
 library(highcharter)
 library(tidyr) 
-library(d3treeR)
 library(digest)
 library(RCurl)
 

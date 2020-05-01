@@ -39,6 +39,7 @@ setwd("C:/Users/Afonso Campos/OneDrive - ufpr.br/Cursos/corona dashboard Afonso/
 
 url1 <- getURL("https://raw.githubusercontent.com/wcota/covid19br/master/cases-brazil-states.csv")
 
+
 dados <- read.csv(text = url1)
 
 #Renomenando as colunas 

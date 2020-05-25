@@ -184,7 +184,7 @@ Row
 ----------------------------------
 
 ### Mapa do Brasil 
-Clique nas regiões
+
 
 ```{r}
 
@@ -218,7 +218,7 @@ mapabra
 ```
 
 ### Número de Casos Região 
-Clique nas regiões para aplicar o zoom
+
 ```{r}
 
 thm <- 
@@ -301,7 +301,7 @@ dataacu%>%
 ```
 
 ### Casos Por Estados
-Clique na legenda para remover ou mais estados do gráfico
+Clique na legenda para remover um ou mais estados do gráfico
 ```{r}
 
 estados2%>%
@@ -331,7 +331,7 @@ estadosobitos <- estadosobitos[estadosobitos$óbitos > 0,] #removendo o que for 
 ggplot(estadosobitos, aes(x = reorder(estado, óbitos), y=óbitos))+
   ylab("Total de óbitos")+
   xlab("Estados")+
-  ylim(NA, max(estadosobitos$óbitos)+100)+
+  ylim(NA, max(estadosobitos$óbitos)+500)+
   geom_text(aes(label=óbitos), hjust=-0.1, size=3.5)+
   geom_bar(stat = "identity", fill = "#db1414")+
   coord_flip()+

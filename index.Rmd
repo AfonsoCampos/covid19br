@@ -1,5 +1,5 @@
 ---
-title: "Coronavírus Brasil - V1.1 "
+title: "Coronavírus Brasil - V1.2 "
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
@@ -183,7 +183,8 @@ valueBox(value = paste(round(sum(mortesestado$Mortes)/max(dataacu$acumulado)*100
 Row
 ----------------------------------
 
-### Mapa do Brasil (Clique nas Regiões)
+### Mapa do Brasil 
+Clique nas regiões
 
 ```{r}
 
@@ -216,7 +217,8 @@ mapabra
 
 ```
 
-### Número de Casos Região e Estados (Clicável)
+### Número de Casos Região 
+Clique nas regiões para aplicar o zoom
 ```{r}
 
 thm <- 
@@ -252,132 +254,62 @@ highchart() %>%
 
 ```
 
-Casos: Estados e Regioes {data-icon="fa-user-plus"}
+Casos  {data-icon="fa-user-plus"}
 ==================
-Row{data-height=300}
---------
-
-### Casos Confirmados Dia nas Regiões
-```{r}
-plotcadia <- ggplot(estados2, aes(x=datas, y=numero, fill=regioes)) +
-  geom_bar(stat="identity")+
-  xlab("Número de Casos Por Dia") +
-  ylab("Total")+
-  labs(fill = "Regiao:")+
-  theme_classic()
-ggplotly(plotcadia) %>%
-layout(legend = list(orientation = "t", x = 0.001, y =1))
-
-```
-
-
-### Número de Casos no Brasil Acumulado
-```{r}
-ggplot(data=dataacu, aes(x=datas, y=acumulado, group=1)) +
-  geom_line(color="red")+
-  xlab("Datas") +
-  ylab("Acumulado")+
-  geom_point(color="red")+
-  theme_classic()
-  ggplotly()
-```
 
 Row{.tabset .tabset-fade}
 ----------------------------------------------------
-
-### Casos Região: Norte
+### Acumulado Regiões-Dia
+Clique na legenda para remover uma ou mais regiões do gráfico
 ```{r}
 
-ggplot(estados2[estados2$regioes == "NORTE",]) + 
-  geom_line(aes(datas, acumulado, color = estado))+
-  xlab("Datas") +
-  ylab("Acumulado")+
-  theme_classic()
+estados6<- estados2[,c(1,4,5)]%>%
+  group_by(datas, regioes)%>%
+  summarise(acumulado = sum(numero))%>%
+  spread(regioes, acumulado)
 
-ggplotly(dynamicTicks = TRUE)%>%
-  layout(hovermode = "x") %>%
-  layout(margin = list(l = 50, r = 50, t = 60, b = 100),
-         annotations = list(text = '*Clique no nome do estado na legenda para remover e ajustar a escala',
-                            font = list(size = 12),
-                            showarrow = FALSE,
-                            xref = 'paper', x = 0,
-                            yref = 'paper', y = -0.3))
+highchart() %>% 
+  hc_chart(type = "column") %>%
+  hc_plotOptions(column = list(stacking = "normal")) %>%
+  hc_xAxis(categories = estados6$datas) %>%
+  hc_add_series(name="Centro-Oeste",
+                data = estados6$`CENTRO-OESTE`,
+                stack = "Regiões", color = "#ff8000") %>%
+  hc_add_series(name="Nordeste",
+                data = estados6$NORDESTE,
+                stack = "Regiões",  color = "#ff0000") %>%
+  hc_add_series(name="Norte",
+                data = estados6$NORTE,
+                stack = "Regiões", color = "#0000ff") %>%
+  hc_add_series(name="Sul",
+                data = estados6$SUL,
+                stack = "Regiões", color =  "#00ff00") %>%
+  hc_add_series(name="Sudeste",
+                data = estados6$SUDESTE,
+                stack = "Regiões", color =  "#620000") %>%
+  hc_add_theme(hc_theme_ft())
+
+```
+
+### Brasil Acumulado
+
+```{r}
+
+dataacu%>%
+  hchart('line', hcaes(x = 'datas', y = 'acumulado'), color = "#ff0000")
+  
+```
+
+### Casos Por Estados
+Clique na legenda para remover ou mais estados do gráfico
+```{r}
+
+estados2%>%
+  hchart('line', hcaes(x = 'datas', y = 'acumulado', group = "estado"))
 
 ```
 
 
-### Casos Região: Nordeste
-```{r}
-ggplot(estados2[estados2$regioes == "NORDESTE",]) + 
-  geom_line(aes(datas, acumulado, color = estado))+
-  xlab("Datas") +
-  ylab("Acumulado")+
-  theme_classic()
-
-ggplotly(dynamicTicks = TRUE)%>%
-  layout(hovermode = "x") %>%
-  layout(margin = list(l = 50, r = 50, t = 60, b = 100),
-         annotations = list(text = '*Clique no nome do estado na legenda para remover e ajustar a escala',
-                            font = list(size = 12),
-                            showarrow = FALSE,
-                            xref = 'paper', x = 0,
-                            yref = 'paper', y = -0.3))
-```
-
-### Casos Região: Centro-Oeste
-```{r}
-ggplot(estados2[estados2$regioes == "CENTRO-OESTE",]) + 
-  geom_line(aes(datas, acumulado, color = estado))+
-  xlab("Datas") +
-  ylab("Acumulado")+
-  theme_classic()
-
-ggplotly(dynamicTicks = TRUE)%>%
-  layout(hovermode = "x") %>%
-  layout(margin = list(l = 50, r = 50, t = 60, b = 100),
-         annotations = list(text = '*Clique no nome do estado na legenda para remover e ajustar a escala',
-                            font = list(size = 12),
-                            showarrow = FALSE,
-                            xref = 'paper', x = 0,
-                            yref = 'paper', y = -0.3))
-```
-
-### Casos Região: Sudeste
-```{r}
-ggplot(estados2[estados2$regioes == "SUDESTE",]) + 
-  geom_line(aes(datas, acumulado, color = estado))+
-  xlab("Datas") +
-  ylab("Acumulado")+
-  theme_classic()
-
-ggplotly(dynamicTicks = TRUE)%>%
-  layout(hovermode = "x") %>%
-  layout(margin = list(l = 50, r = 50, t = 60, b = 100),
-         annotations = list(text = '*Clique no nome do estado na legenda para remover e ajustar a escala',
-                            font = list(size = 12),
-                            showarrow = FALSE,
-                            xref = 'paper', x = 0,
-                            yref = 'paper', y = -0.3))
-
-```
-
-### Casos Região: Sul
-```{r}
-ggplot(estados2[estados2$regioes == "SUL",]) + 
-  geom_line(aes(datas, acumulado, color = estado))+
-  xlab("Datas") +
-  ylab("Acumulado")+
-  theme_classic()
-
-ggplotly(dynamicTicks = TRUE)%>%
-  layout(hovermode = "x") %>%
-  layout(margin = list(l = 50, r = 50, t = 60, b = 100),
-         annotations = list(text = '*Clique no nome do estado na legenda para remover e ajustar a escala',
-                            font = list(size = 12),
-                            showarrow = FALSE,
-                            xref = 'paper', x = 0,
-                            yref = 'paper', y = -0.3))
-```
 
 
 Óbitos e Letalidade {data-icon="fa-user-plus"}
@@ -427,7 +359,7 @@ ggplot(estadosacumulado, aes(x = reorder(estado, letalidade), y=letalidade))+
   geom_bar(stat = "identity", fill = "#db1414")+
   coord_flip()+
    geom_hline(yintercept = med_bra, size =1.2,linetype= "dashed", color ="#f0674f")+
-   geom_text(aes(y=med_bra, label=paste0("Média Nacional ",med_bra,"%"), x= "RS"))+
+   geom_text(aes(y=med_bra, label=paste0("Média Nacional ",med_bra,"%"), x= "SC"))+
   theme_classic()
 
 ```

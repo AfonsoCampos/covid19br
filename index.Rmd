@@ -1,5 +1,5 @@
 ---
-title: "Coronavírus Brasil - V1.2 "
+title: "Coronavírus Brasil - V1.3"
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
@@ -254,12 +254,12 @@ highchart() %>%
 
 ```
 
-Casos  {data-icon="fa-user-plus"}
+Casos  {data-icon="fa-bar-chart"}
 ==================
 
 Row{.tabset .tabset-fade}
 ----------------------------------------------------
-### Acumulado Regiões-Dia
+### Regiõe (casos diários) 
 Clique na legenda para remover uma ou mais regiões do gráfico
 ```{r}
 
@@ -300,7 +300,7 @@ dataacu%>%
   
 ```
 
-### Casos Por Estados
+### Casos  Acumulados Por Estados
 Clique na legenda para remover um ou mais estados do gráfico
 ```{r}
 
@@ -312,7 +312,7 @@ estados2%>%
 
 
 
-Óbitos e Letalidade {data-icon="fa-user-plus"}
+Óbitos e Letalidade {data-icon="fa-bar-chart"}
 ==================
 
 Row
@@ -364,6 +364,54 @@ ggplot(estadosacumulado, aes(x = reorder(estado, letalidade), y=letalidade))+
 
 ```
 
+Tempo de dobra {data-icon="fa-bar-chart"}
+==================
+
+Row
+----------------------------------
+
+### Dobra - Casos
+
+Tempo de dobra considerando os dados da última atualização e tomando como referência o número casos de sete dias atrás
+
+```{r}
+dobra <- function(dia, final, inicial){
+  round(dia/(log2(final) -log2(inicial)), 2)
+}
+
+dat.ini<-estados2[estados2$datas == max(estados2$datas)-7,]
+dat.ini<- dat.ini[,c(1,2,3,6)]
+dat.fin<-estados2[estados2$datas == max(estados2$datas),]
+dat.fin<-dat.fin[,c(1,2,3,6)]
+dat.ini.fin <-  cbind(dat.ini, dat.fin)
+dat.ini.fin <-dat.ini.fin %>% 
+  group_by(estado) %>% 
+  summarise( obi.dob= dobra(7, mortes1, mortes), casos.dob = dobra(7, acumulado1, acumulado))
+####plot 
+ggplot(dat.ini.fin, aes(x = reorder(estado, desc(casos.dob)), y=casos.dob))+
+  ylab("Número de dias ")+
+  xlab("Estados")+
+  ylim(NA, max(dat.ini.fin$casos.dob)+30)+
+  geom_text(aes(label=casos.dob), hjust=-0.1, size=3.5)+
+  geom_bar(stat = "identity", fill = "#e8a41c")+
+  coord_flip()+
+  theme_classic()
+```
+
+### Dobra - Óbitos 
+
+Tempo de dobra considerando os dados da última atualização e tomando como referência o número óbitos de sete dias atrás
+
+```{r}
+ggplot(dat.ini.fin, aes(x = reorder(estado, desc(obi.dob)), y=obi.dob))+
+  ylab("Número de dias")+
+  xlab("Estados")+
+ ylim(NA, max(dat.ini.fin$obi.dob)+10)+
+  geom_text(aes(label=obi.dob), hjust=-0.1, size=3.5)+
+  geom_bar(stat = "identity", fill = "#ab0f0f")+
+  coord_flip()+
+  theme_classic()
+```
 
 
 Informações {data-icon="fa-address-card"}

@@ -372,8 +372,6 @@ Row
 
 ### Dobra - Casos
 
-Tempo de dobra considerando os dados da última atualização e tomando como referência o número casos de sete dias atrás
-
 ```{r}
 dobra <- function(dia, final, inicial){
   round(dia/(log2(final) -log2(inicial)), 2)
@@ -391,6 +389,7 @@ dat.ini.fin <-dat.ini.fin %>%
 ggplot(dat.ini.fin, aes(x = reorder(estado, desc(casos.dob)), y=casos.dob))+
   ylab("Número de dias ")+
   xlab("Estados")+
+  labs(caption = "*Considerando os dados da última atualização e tomando como referência o número de sete dias atrás")+
   ylim(NA, max(dat.ini.fin$casos.dob)+30)+
   geom_text(aes(label=casos.dob), hjust=-0.1, size=3.5)+
   geom_bar(stat = "identity", fill = "#e8a41c")+
@@ -399,9 +398,6 @@ ggplot(dat.ini.fin, aes(x = reorder(estado, desc(casos.dob)), y=casos.dob))+
 ```
 
 ### Dobra - Óbitos 
-
-Tempo de dobra considerando os dados da última atualização e tomando como referência o número óbitos de sete dias atrás
-
 ```{r}
 ggplot(dat.ini.fin, aes(x = reorder(estado, desc(obi.dob)), y=obi.dob))+
   ylab("Número de dias")+
@@ -409,8 +405,10 @@ ggplot(dat.ini.fin, aes(x = reorder(estado, desc(obi.dob)), y=obi.dob))+
  ylim(NA, max(dat.ini.fin$obi.dob)+10)+
   geom_text(aes(label=obi.dob), hjust=-0.1, size=3.5)+
   geom_bar(stat = "identity", fill = "#ab0f0f")+
+  labs(caption = "*Considerando os dados da última atualização e tomando como referência o número de sete dias atrás")+
   coord_flip()+
   theme_classic()
+
 ```
 
 
